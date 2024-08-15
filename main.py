@@ -40,19 +40,32 @@ def get_nvme_health(device):
 def parse_nvme_output(output):
     health_info = {}
     lines = output.splitlines()
+    print(lines)
     for line in lines:
-        if "percentage used" in line.lower():
+        if "percentage_used" in line.lower():
+            #print("\n\n\n" + line.lower)
             health_info['Percentage Used'] = line.split(":")[-1].strip()
-        elif "temperature" in line.lower() and "sensor" not in line.lower():
-            health_info['Temperature'] = line.split(":")[-1].strip()
-        elif "critical warning" in line.lower():
+        #elif "temperature" in line.lower() and "sensor" not in line.lower():
+            #health_info['Temperature'] = line.split(":")[-1].strip()
+        elif "critical_warning" in line.lower():
             health_info['Critical Warning'] = line.split(":")[-1].strip()
-        elif "available spare" in line.lower() and "threshold" not in line.lower():
+        elif "available_spare" in line.lower() and "threshold" not in line.lower():
             health_info['Available Spare'] = line.split(":")[-1].strip()
         elif "data units written" in line.lower():
             health_info['Data Units Written'] = line.split(":")[-1].strip()
         elif "data units read" in line.lower():
             health_info['Data Units Read'] = line.split(":")[-1].strip()
+        elif "host_read_commands" in line.lower():
+            health_info['Host Read Commands'] = line.split(":")[-1].strip()
+        elif "host_write_commands" in line.lower():
+            health_info['Host Write Commands'] = line.split(":")[-1].strip()
+        elif "power_cycles" in line.lower():
+            health_info['Power Cycles'] = line.split(":")[-1].strip()
+        elif "power_on_hours" in line.lower():
+            health_info['Power On Hours'] = line.split(":")[-1].strip()
+        elif "unsafe_shutdowns" in line.lower():
+            health_info['Unsafe Shutdowns'] = line.split(":")[-1].strip()
+            
     return health_info
 
 # Function to get NVMe device serial number and model number
@@ -82,7 +95,7 @@ def get_nvme_device_info(device):
 
 # Function to write the health info to an Excel file
 def write_to_excel(device, serial_number, model_number, health_info):
-    headers = ['Timestamp', 'Device', 'Serial Number', 'Model Number', 'Percentage Used', 'Temperature', 'Critical Warning', 'Available Spare', 'Data Units Written', 'Data Units Read']
+    headers = ['Timestamp', 'Device', 'Serial Number', 'Model Number', 'Percentage Used', 'Critical Warning', 'Available Spare', 'Data Units Written', 'Data Units Read', 'Host Read Commands', 'Host Write Commands', 'Power Cycles', 'Power On Hours', 'Unsafe Shutdowns']
 
     try:
         # Load or create the Excel file
