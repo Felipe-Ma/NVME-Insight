@@ -86,14 +86,14 @@ def get_nvme_device_info(device):
             if "sn" in line.lower(): 
                 serial_number = line.split(":")[-1].strip()
             if re.match(r'^\s*mn\s*:', line.lower()):
-                print("+ " + line)
+                #print("+ " + line)
                 mn_key, value = line.split(":", 1)
                 #print(mn_key, value)
                 model_number = value
             if re.match(r'^\s*fr\s*:', line.lower()):
-                print("+ " + line)
+                #print("+ " + line)
                 fr_key, value = line.split(":", 1)
-                print(fr_key, value)
+                #print(fr_key, value)
                 firmware_version = value
 
         return serial_number, model_number, firmware_version
@@ -104,7 +104,7 @@ def get_nvme_device_info(device):
 # Function to write the health info to an Excel file
 def write_to_excel(device, serial_number, model_number, firmware_version, health_info):
     headers = ['Timestamp', 'Device', 'Serial Number', 'Model Number', 'Firwmare Version','Percentage Used', 'Critical Warning', 'Available Spare', 'Media Errors', 'Data Units Written', 'Data Units Read', 'Host Read Commands', 'Host Write Commands', 'Power Cycles', 'Power On Hours', 'Unsafe Shutdowns']
-    print(health_info)
+    #print(health_info)
     try:
         # Load or create the Excel file
         try:
